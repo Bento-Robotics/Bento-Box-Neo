@@ -22,10 +22,11 @@ WORKDIR /bento_ws
 
 # Get sources
 RUN cd src &&\
-	 git clone https://github.com/Bento-Robotics/bento_drive &&\
-	 git clone https://github.com/Bento-Robotics/TunnelVision &&\
-         git clone https://github.com/MAPIRlab/rf2o_laser_odometry.git &&\
-   cd ..
+	 git clone https://github.com/Bento-Robotics/bento_diagnostics.git &&\
+	 git clone https://github.com/Bento-Robotics/bento_drive.git &&\
+	 git clone https://github.com/Bento-Robotics/TunnelVision.git &&\
+     git clone https://github.com/MAPIRlab/rf2o_laser_odometry.git &&\
+    cd ..
 
 # Build workspace
 RUN bash -c " \

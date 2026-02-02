@@ -19,6 +19,18 @@ def generate_launch_description():
 
     robot_namespace = LaunchConfiguration('robot_namespace')
 
+    diagnostics = Node(
+        package='bento_diagnostics',
+        executable='bento_diagnostics_node',
+        name='bento_diagnostics',
+        parameters=[
+            {"publish_rate": 1000},
+            {"config_file": PathJoinSubstitution([ '/', 'launch-content', 'parameters', 'diagnostics_config.yaml'])},
+        ],
+        output='screen',
+        emulate_tty=True,
+    )
+
     bento_drive = Node(
         package='bento_drive',
         executable='bento_drive_node',
@@ -97,6 +109,7 @@ def generate_launch_description():
         GroupAction(
         actions=[
             PushRosNamespace(robot_namespace),
+            diagnostics,
             joystick,
             camera_ros_1,
             camera_ros_2,

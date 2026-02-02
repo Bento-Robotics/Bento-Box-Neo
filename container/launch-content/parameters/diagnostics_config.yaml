@@ -1,0 +1,39 @@
+# OK=0, WARN=1, ERROR=2. STALE=3
+
+# Diagnostics to evaluate
+diagnostics:
+  - name: "bento_drive"
+    # Higher priority overwrites lower priority in a latching manner.
+    log_messages:
+      - name: "can_transmission"
+        keyword: "Can transmission error" #alt? WARNING: Cannot open CAN device interface: CAN2
+        message: "CAN error, make sure your hardware is working! Check with 'ip a'"
+        level: ERROR
+        priority: 2
+      - name: "motorcontroller_error"
+        keyword: "ERROR initializing motor controller with ID"
+        message: "Motorcontroller is fucked."
+        level: ERROR
+        priority: 1
+      - name: "disabled_robot"
+        keyword: "Disabling robot"
+        message: "Motors Disabled!"
+        level: WARN
+        priority: 0
+      - name: "enabled_robot"
+        keyword: "Enabling robot"
+        message: "Operating normally."
+        level: OK
+        priority: 0
+  - name: "camera_ros"
+    log_messages:
+      - name: "camera_crash"
+        keyword: "terminate called after throwing an instance of"
+        message: "Camera crashed, make sure it is plugged in and for wobbly contacts! Check with 'cam -l' and 'lsusb'"
+        level: ERROR
+  - name: "rplidar_node"
+    log_messages:
+      - name: "serial_port"
+        keyword: "Error, cannot bind to the specified serial port"
+        message: "Serial Port not found, make sure the LiDAR is plugged in! Check with 'ls /dev/ttyUSB*'"
+        level: ERROR
