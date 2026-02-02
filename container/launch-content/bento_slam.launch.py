@@ -19,7 +19,7 @@ def generate_launch_description():
         executable='rf2o_laser_odometry_node',
         name='rf2o_laser_odometry',
         parameters=[
-            { PathJoinSubstitution([ './', 'parameters', 'rf2o_laser_odometry.yaml' ]) },
+            { PathJoinSubstitution([ './', 'parameters', 'slam', 'rf2o_laser_odometry.yaml' ]) },
             { 'base_frame_id': PathJoinSubstitution([ robot_namespace, 'base_footprint' ]) },
             { 'odom_frame_id': PathJoinSubstitution([ robot_namespace, 'odom' ]) },
         ],
@@ -33,7 +33,7 @@ def generate_launch_description():
         launch_arguments={
             'autostart' : 'true',
             'use_lifecycle_manager'  : 'false',
-            'slam_params_file' : PathJoinSubstitution([ './', 'parameters', 'slam_toolbox.yaml' ]),
+            'slam_params_file' : PathJoinSubstitution([ './', 'parameters', 'slam', 'slam_toolbox.yaml' ]),
             'use_sim_time' : 'true',
             'namespace' : robot_namespace,
         }.items()

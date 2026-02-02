@@ -1,0 +1,17 @@
+# Docs: https://github.com/ros/diagnostics/tree/ros2/diagnostic_aggregator
+
+analyzers:
+  ros__parameters:
+    path: Aggregation
+    sensors:
+      type: diagnostic_aggregator/GenericAnalyzer
+      path: SLAM
+      startswith: [ 'rplidar_node' ]
+    motors:
+      type: diagnostic_aggregator/GenericAnalyzer
+      path: Drive
+      contains: [ 'bento_drive' ]
+    cameras:
+      type: diagnostic_aggregator/GenericAnalyzer
+      path: Cameras
+      contains: [ 'camera_ros' ]

@@ -8,7 +8,7 @@ from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
 
 from launch.actions import GroupAction
-from launch_ros.actions import PushRosNamespace
+from launch_ros.actions import PushRosNamespace, ROSTimer
 
 from launch.actions import ExecuteProcess, IncludeLaunchDescription
 from launch.substitutions import EnvironmentVariable, PathJoinSubstitution
@@ -25,10 +25,17 @@ def generate_launch_description():
         name='bento_diagnostics',
         parameters=[
             {"publish_rate": 1000},
-            {"config_file": PathJoinSubstitution([ '/', 'launch-content', 'parameters', 'diagnostics_config.yaml'])},
+            {"config_file": PathJoinSubstitution([ '/', 'launch-content', 'parameters', 'diagnostics', 'diagnostics_config.yaml'])},
         ],
         output='screen',
         emulate_tty=True,
+    )
+
+    aggregator = Node(
+        package='diagnostic_aggregator',
+        executable='aggregator_node',
+        parameters=[PathJoinSubstitution([ '/', 'launch-content', 'parameters', 'diagnostics', 'aggregator_analysers.yaml'])],
+        output='screen',
     )
 
     bento_drive = Node(
@@ -106,10 +113,14 @@ def generate_launch_description():
             default_value='bento',
             description='set namespace for robot nodes'
         ),
-        GroupAction(
+        # start diagnostics before everything else
+        diagnostics,
+        aggregator,
+        # and give it a 4-second head start to initialize
+        ROSTimer(
+            period=4.0,
         actions=[
             PushRosNamespace(robot_namespace),
-            diagnostics,
             joystick,
             camera_ros_1,
             camera_ros_2,

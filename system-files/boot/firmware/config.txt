@@ -11,3 +11,9 @@ dtoverlay=audremap-pi5
 
 # I2C for sensors
 dtoverlay=i2c_arm=on,i2c_arm_baudrate=400000
+
+# charge the RTC battery
+dtparam=rtc_bbat_vchg=3000000
+
+# make the fan turn on sooner (switch to 30% at 40°C)
+dtparam=fan_temp0=40000
