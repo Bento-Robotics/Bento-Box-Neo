@@ -20,6 +20,9 @@ RUN apt-get update && apt-get upgrade -y && apt-get install \
 RUN mkdir -p /bento_ws/src
 WORKDIR /bento_ws
 
+# Trick Docker into re-building (by incrementing this variable)
+ENV REBUILD=4
+
 # Get sources
 RUN cd src &&\
 	 git clone https://github.com/Bento-Robotics/bento_diagnostics.git &&\

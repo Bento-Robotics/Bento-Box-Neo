@@ -6,7 +6,7 @@ analyzers:
     sensors:
       type: diagnostic_aggregator/GenericAnalyzer
       path: SLAM
-      startswith: [ 'rplidar_node' ]
+      startswith: [ 'rplidar' ]
     motors:
       type: diagnostic_aggregator/GenericAnalyzer
       path: Drive
@@ -14,4 +14,4 @@ analyzers:
     cameras:
       type: diagnostic_aggregator/GenericAnalyzer
       path: Cameras
-      contains: [ 'camera_ros' ]
+      contains: [ 'camera_node' ]

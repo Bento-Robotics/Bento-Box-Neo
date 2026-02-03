@@ -7,7 +7,7 @@
   ros__parameters:
     usingPowerManagementBoard: false
     verbosity: false
-    canInterface: can0
+    canInterface: can1
     frequencyScale: 32
     inputWeight: 0.2
     maxPulseWidth: 100

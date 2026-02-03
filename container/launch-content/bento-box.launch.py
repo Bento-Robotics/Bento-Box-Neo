@@ -53,7 +53,7 @@ def generate_launch_description():
     # Bento-Box has no such board, so we just send the 'important' thing the board would send
     # (I think it is a voltage readout, because bento_drive complains about undervoltage)
     can_fix = ExecuteProcess(
-        cmd=[['while true; do cansend can0 580#0241AD347300; sleep 1; done']],
+        cmd=[['while true; do cansend can1 580#0241AD347300; sleep 1; done']],
         shell=True,
     )
 
@@ -116,17 +116,17 @@ def generate_launch_description():
         # start diagnostics before everything else
         diagnostics,
         aggregator,
-        # and give it a 4-second head start to initialize
+        # and give it a 3-second head start to initialize
         ROSTimer(
-            period=4.0,
-        actions=[
-            PushRosNamespace(robot_namespace),
-            joystick,
-            camera_ros_1,
-            camera_ros_2,
-            bento_drive,
-            lidar,
-        ]),
-        slam,  # already namespaced
+            period=3.0,
+            actions=[
+                PushRosNamespace(robot_namespace),
+                joystick,
+                camera_ros_1,
+                camera_ros_2,
+                bento_drive,
+                lidar,
+            ]),
+#        slam,  # already namespaced
         can_fix,
     ])
