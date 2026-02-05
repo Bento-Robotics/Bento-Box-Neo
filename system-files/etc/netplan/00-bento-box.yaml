@@ -3,11 +3,15 @@ network:
   renderer: networkd
   ethernets:
     eth0:
+      match:
+        name: eth0
       optional: true
       addresses:
       - "192.168.39.1/24"
   wifis:
     wlan0:
+      match:
+        name: wlan0
       renderer: NetworkManager
       optional: false
       addresses:
