@@ -23,7 +23,7 @@ Files are laid out in the same way that they would be in the system.
 ```shell
 # Install software (everything after 'git' is optional)
 sudo apt update
-sudo apt install docker.io docker-compose dnsmasq git gh lazygit can-utils i2c-tools libcamera-tools btop stress iperf3 tree -y  # presume that systemd-networkd is preinstalled, like on raspi
+sudo apt install docker.io docker-compose dnsmasq hostapd ifupdown git gh lazygit can-utils i2c-tools libcamera-tools btop stress iperf3 tree -y  # presume that systemd-networkd is preinstalled, like on raspi
 # say yes to auto-start iperf3
 
 # Set up user docker permissions

@@ -24,9 +24,14 @@ install_thingy() {
   fi
 }
 
-install_thingy 600 root root "/etc/netplan/00-bento-box.yaml"
-install_thingy 600 root root "/etc/dnsmasq.d/00-bento-box.conf"
+install_thingy 644 root root "/etc/NetworkManager/NetworkManager.conf"
+install_thingy 644 root root "/etc/systemd/network/10-create-bridge-br0.netdev"
+install_thingy 644 root root "/etc/systemd/network/20-bind-ethernet-with-bridge-br0.network"
+install_thingy 644 root root "/etc/systemd/network/30-config-bridge-br0.network"
 install_thingy 644 root root "/etc/systemd/network/80-can.network"
+install_thingy 600 root root "/etc/dnsmasq.d/00-bento-box.conf"
+install_thingy 644 root root "/etc/systemd/system/bento-hostapd.service"
+install_thingy 600 root root "/etc/hostapd/bento-box-AP.conf"
 
 
 printf "${GREEN}set wifi region? (y/n)${NC}%s "
@@ -53,16 +58,18 @@ else
   printf "${GREEN}OK: Pi config, ${PI_FW}, modified. \n ${NC}"
 fi
 
-# enable CAN networking
+
+systemctl daemon-reload 
+# enable network configs
 systemctl enable systemd-networkd
 systemctl start systemd-networkd
 printf "${GREEN}OK: enabled & started systemd-networkd \n ${NC}"
 # enable DHCP & DNS server
-#  technically this should be done after netplan
-#  but you lose connection once netplan is done so have no Idea if it worked
 systemctl enable dnsmasq &>/dev/null #STFU sysV
 systemctl start dnsmasq
 printf "${GREEN}OK: enabled & started dnsmasq \n ${NC}"
-# set up networking
-netplan apply
-printf "${GREEN}OK: configured networking \n ${NC}"
+# set up wifi AP
+systemctl unmask bento-hostapd.service
+systemctl enable bento-hostapd.service &>/dev/null #STFU sysV
+systemctl start bento-hostapd.service
+printf "${GREEN}OK: enabled wifi AP \n ${NC}"
