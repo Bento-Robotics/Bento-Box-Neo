@@ -53,7 +53,7 @@ def generate_launch_description():
     # Bento-Box has no such board, so we just send the 'important' thing the board would send
     # (I think it is a voltage readout, because bento_drive complains about undervoltage)
     can_fix = ExecuteProcess(
-        cmd=[['while true; do cansend can1 580#0241AD347300; sleep 1; done']],
+        cmd=[['while true; do cansend can0 580#0241AD347300; sleep 1; done']],
         shell=True,
     )
 

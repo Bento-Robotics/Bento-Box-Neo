@@ -7,7 +7,7 @@
   ros__parameters:
     usingPowerManagementBoard: false
     verbosity: false
-    canInterface: can1
+    canInterface: can0
     frequencyScale: 32
     inputWeight: 0.2
     maxPulseWidth: 100
@@ -18,13 +18,16 @@
     antiWindup: 1
     responseMode: 0
 
-    controllers: 2
+    controllers: 3
+
+# encoderRatio and rpmMax didn't change anything?
+# something is amiss
 
     controller0:
       canID: 0
-      gearRatio: 44.0
+      gearRatio: 89.0
       encoderRatio: 2048.0
-      rpmMax: 204.0
+      rpmMax: 83.25
       invertEnc: 1
       drive0:
         channel: 0
@@ -35,9 +38,22 @@
 
     controller1:
       canID: 1
-      gearRatio: 44.0
+      gearRatio: 89.0
       encoderRatio: 2048.0
-      rpmMax: 204.0
+      rpmMax: 83.25
+      invertEnc: 1
+      drive0:
+        channel: 0
+        kinematics: [9.1, 0.0, -8.3]
+      drive1:
+        channel: 1
+        kinematics: [-9.1, 0.0, -8.3]
+
+    controller2:
+      canID: 2
+      gearRatio: 89.0
+      encoderRatio: 2048.0
+      rpmMax: 83.25
       invertEnc: 1
       drive0:
         channel: 0
