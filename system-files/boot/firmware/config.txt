@@ -3,10 +3,12 @@
 # EduArt shield: 3x mcp251xfd CAN transceivers
 dtoverlay=spi1-2cs
 dtoverlay=mcp251xfd,spi0-0,oscillator=40000000,interrupt=25
-dtoverlay=mcp251xfd,spi0-1,oscillator=40000000,interrupt=13
+#dtoverlay=mcp251xfd,spi0-1,oscillator=40000000,interrupt=13
 dtoverlay=mcp251xfd,spi1-0,oscillator=40000000,interrupt=24
 
 # Pi5: PWM audio output
+# !WARN! audremap and mcp251xfd,irq=13 use the same pin
+# only enable one at a time
 dtoverlay=audremap-pi5
 
 # I2C for sensors
@@ -17,3 +19,6 @@ dtparam=rtc_bbat_vchg=3000000
 
 # make the fan turn on sooner (switch to 30% at 40°C)
 dtparam=fan_temp0=40000
+
+# poweroff GPIO
+dtoverlay=gpio-poweroff,gpiopin=6,active_low=on
