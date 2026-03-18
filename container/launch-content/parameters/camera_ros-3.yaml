@@ -4,8 +4,9 @@
     role: "video"    # stream role (one of {raw, still, video, viewfinder})
     width: 640       # image dimensions
     height: 480      # "
-    camera: "/base/axi/pcie@1000120000/rp1/usb@300000-1:1.0-0c45:636d"        # camera ID (ID - 1)
+    camera: "/base/axi/pcie@1000120000/rp1/usb@300000-2.2.1:1.0-1e45:0209"        # camera ID (ID - 1)
     format: "MJPEG"
+    orientation: 180
 
 # get camera controls:
 # `cam --list-controls -cₓ`
@@ -19,6 +20,6 @@
     #ExposureTime: #[100..500000]
     #Saturation: #[0.000000..2.000000]
     #AnalogueGain: #[1.000000..4.000000]
-    AeEnable: true #[false..true]
+    #AeEnable: true #[false..true]
     #Contrast: #[0.500000..1.500000]
-    Brightness: -0.8  #[-1.000000..1.000000]
+    #Brightness: #[-1.000000..1.000000]

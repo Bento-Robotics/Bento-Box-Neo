@@ -65,7 +65,7 @@ def generate_launch_description():
     camera_ros_1 = Node(
         package='camera_ros',
         executable='camera_node',
-        name='camera_node_1',
+        name='camera_front',
         parameters=[ PathJoinSubstitution([ '/', 'launch-content', 'parameters', 'camera_ros-1.yaml' ]) ],
         namespace="cam1",
         emulate_tty=True,
@@ -74,9 +74,18 @@ def generate_launch_description():
     camera_ros_2 = Node(
         package='camera_ros',
         executable='camera_node',
-        name='camera_node_2',
+        name='camera_back',
         parameters=[ PathJoinSubstitution([ '/', 'launch-content', 'parameters', 'camera_ros-2.yaml' ]) ],
         namespace="cam2",
+        emulate_tty=True,
+    )
+
+    camera_ros_3 = Node(
+        package='camera_ros',
+        executable='camera_node',
+        name='camera_arm',
+        parameters=[ PathJoinSubstitution([ '/', 'launch-content', 'parameters', 'camera_ros-3.yaml' ]) ],
+        namespace="cam3",
         emulate_tty=True,
     )
 
@@ -128,6 +137,7 @@ def generate_launch_description():
                 joystick,
                 camera_ros_1,
                 camera_ros_2,
+                camera_ros_3,
                 bento_drive,
             ]),
         lidar,
