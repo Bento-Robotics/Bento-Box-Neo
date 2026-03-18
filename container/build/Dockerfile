@@ -9,11 +9,12 @@ RUN apt-get update && apt-get upgrade -y && apt-get install \
                  ros-jazzy-camera-ros \
                  ros-jazzy-libcamera \
                  ros-jazzy-zbar-ros \
+                 ros-jazzy-xacro \
                  ros-jazzy-rplidar-ros \
                  ros-jazzy-slam-toolbox \
                  python3-pip python3-lgpio \
                  libcamera-tools can-utils i2c-tools \
-                -y && rm -rf /var/lib/apt/lists/*
+                 -y && rm -rf /var/lib/apt/lists/*
 
 
 # Create workspace
@@ -21,14 +22,14 @@ RUN mkdir -p /bento_ws/src
 WORKDIR /bento_ws
 
 # Trick Docker into re-building (by incrementing this variable)
-ENV REBUILD=4
+ENV REBUILD=0
 
 # Get sources
 RUN cd src &&\
 	 git clone https://github.com/Bento-Robotics/bento_diagnostics.git &&\
 	 git clone https://github.com/Bento-Robotics/bento_drive.git &&\
 	 git clone https://github.com/Bento-Robotics/TunnelVision.git &&\
-     git clone https://github.com/MAPIRlab/rf2o_laser_odometry.git &&\
+         git clone https://github.com/MAPIRlab/rf2o_laser_odometry.git &&\
     cd ..
 
 # Build workspace

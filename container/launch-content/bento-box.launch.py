@@ -90,22 +90,26 @@ def generate_launch_description():
             'serial_port': '/dev/ttyUSB0',
             'serial_baudrate': 115200,  # A1 / A2
             # 'serial_baudrate': 256000, # A3
-            'frame_id': PathJoinSubstitution ([ robot_namespace, 'laser_frame' ]),
+            'frame_id': 'laser_frame',
             'inverted': False,
             'angle_compensate': True,
             'use_sim_time' : True,
         }],
     )
 
-    slam = IncludeLaunchDescription(
-        PathJoinSubstitution([
-            '.','bento_slam.launch.py'
-        ]),
+    robot_model = IncludeLaunchDescription(
+        PathJoinSubstitution([ '.', 'xacro-robot-description.launch.py' ]),
         launch_arguments={
-            'robot_namespace' : robot_namespace,
+            'model': PathJoinSubstitution([ '/', 'launch-content', 'parameters', 'bento-box-neo.urdf' ]),
         }.items()
     )
 
+    slam = IncludeLaunchDescription(
+        PathJoinSubstitution([ '.', 'bento_slam.launch.py' ]),
+        launch_arguments={
+            'robot_namespace': robot_namespace,
+        }.items()
+    )
 
     return LaunchDescription([
         DeclareLaunchArgument(
@@ -125,8 +129,9 @@ def generate_launch_description():
                 camera_ros_1,
                 camera_ros_2,
                 bento_drive,
-                lidar,
             ]),
+        lidar,
 #        slam,  # already namespaced
         can_fix,
+        robot_model,
     ])
