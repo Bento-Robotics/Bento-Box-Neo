@@ -4,7 +4,7 @@
 dtoverlay=spi1-2cs
 dtoverlay=mcp251xfd,spi0-0,oscillator=40000000,interrupt=25
 #dtoverlay=mcp251xfd,spi0-1,oscillator=40000000,interrupt=13
-dtoverlay=mcp251xfd,spi1-0,oscillator=40000000,interrupt=24
+#dtoverlay=mcp251xfd,spi1-0,oscillator=40000000,interrupt=24
 
 # Pi5: PWM audio output
 # !WARN! audremap and mcp251xfd,irq=13 use the same pin
