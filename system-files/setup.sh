@@ -54,12 +54,20 @@ PI_FW="/boot/firmware/config.txt"
 if grep -q "bento robot" $PI_FW ; then
   printf "${YELLOW}WARN: Pi config, ${PI_FW}, already was modified. Skipping \n ${NC}"
 else
-  cat ./boot/firmware/config.txt >>/boot/firmware/config.txt
+  cat ./boot/firmware/config.txt >>"$PI_FW"
   printf "${GREEN}OK: Pi config, ${PI_FW}, modified. \n ${NC}"
 fi
 
+PI_BASHRC="$HOME/.bashrc"
+if grep -q "bento robot" $PI_BASHRC ; then
+  printf "${YELLOW}WARN: Pi bashrc, ${PI_BASHRC}, already was modified. Skipping \n ${NC}"
+else
+  cat ./bashrc.bash >>"$PI_BASHRC"
+  printf "${GREEN}OK: Pi bashrc, ${PI_BASHRC}, modified. \n ${NC}"
+fi
 
-systemctl daemon-reload 
+
+systemctl daemon-reload
 # enable network configs
 systemctl enable systemd-networkd
 systemctl start systemd-networkd
