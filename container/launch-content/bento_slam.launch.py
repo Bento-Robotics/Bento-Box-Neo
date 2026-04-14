@@ -10,6 +10,7 @@ from launch.substitutions import LaunchConfiguration
 from launch.actions import GroupAction
 from launch_ros.actions import PushRosNamespace
 
+
 def generate_launch_description():
 
     robot_namespace = LaunchConfiguration('robot_namespace')
@@ -17,11 +18,11 @@ def generate_launch_description():
     rf2o_odom = Node(
         package='rf2o_laser_odometry',
         executable='rf2o_laser_odometry_node',
-        name='rf2o_laser_odometry',
+        # no name because rf2o is weird and registers 2 Nodes
         parameters=[
-            { PathJoinSubstitution([ './', 'parameters', 'slam', 'rf2o_laser_odometry.yaml' ]) },
-            { 'base_frame_id': PathJoinSubstitution([ robot_namespace, 'base_footprint' ]) },
-            { 'odom_frame_id': PathJoinSubstitution([ robot_namespace, 'odom' ]) },
+            { PathJoinSubstitution([ '.', 'parameters', 'slam', 'rf2o_laser_odometry.yaml' ]) },
+#            { 'base_frame_id': PathJoinSubstitution([ '/', 'base_footprint' ]) },
+#            { 'odom_frame_id': PathJoinSubstitution([ '/', 'odom' ]) },
         ],
         arguments=['--ros-args', '--log-level', 'warn'],
         output='screen',
@@ -29,13 +30,13 @@ def generate_launch_description():
     )
 
     slam_toolbox = IncludeLaunchDescription(
-        PathJoinSubstitution([ './', 'slam_toolbox-online_async_namespaced.launch.py']),
+        PathJoinSubstitution([ '.', 'slam_toolbox-online_async_namespaced.launch.py' ]),
         launch_arguments={
-            'autostart' : 'true',
-            'use_lifecycle_manager'  : 'false',
-            'slam_params_file' : PathJoinSubstitution([ './', 'parameters', 'slam', 'slam_toolbox.yaml' ]),
-            'use_sim_time' : 'true',
-            'namespace' : robot_namespace,
+            'autostart': 'true',
+            'use_lifecycle_manager': 'false',
+            'slam_params_file': PathJoinSubstitution([ '.', 'parameters', 'slam', 'slam_toolbox.yaml' ]),
+            'use_sim_time': 'false',
+#            'namespace' : robot_namespace,
         }.items()
     )
 
@@ -77,45 +78,6 @@ def generate_launch_description():
         emulate_tty=True,
     )
 
-    tf_basefootprint_baselink = Node(
-        package='tf2_ros',
-        executable='static_transform_publisher',
-        name='base_footprint_to_base_link_tf',
-        arguments=[
-            "--x", "0.0",
-            "--y", "0.0",
-            "--z", "0.0",
-            "--roll", "0.0",
-            "--pitch", "0.0",
-            "--yaw", "0.0",
-            "--frame-id", PathJoinSubstitution([ robot_namespace, 'base_footprint' ]),
-            "--child-frame-id", PathJoinSubstitution([ robot_namespace, 'base_link' ])
-        ],
-        #remappings=[('/tf','tf'),('/tf_static','tf_static')],
-        output="screen",
-        emulate_tty=True,
-    )
-
-    # LiDAR TF
-    tf_baselink_laser = Node(
-        package='tf2_ros',
-        executable='static_transform_publisher',
-        name='base_link_to_laserframe_tf',
-        arguments=[
-            "--x", "0.0",
-            "--y", "0.0",
-            "--z", "0.0",
-            "--roll", "0.0",
-            "--pitch", "0.0",
-            "--yaw", "0.0",
-            "--frame-id", PathJoinSubstitution([ robot_namespace, 'base_link' ]),
-            "--child-frame-id", PathJoinSubstitution([ robot_namespace, 'laser_frame' ])
-        ],
-        #remappings=[('/tf','tf'),('/tf_static','tf_static')],
-        output="screen",
-        emulate_tty=True,
-    )
-
     return LaunchDescription([
         DeclareLaunchArgument(
             'robot_namespace',
@@ -127,10 +89,8 @@ def generate_launch_description():
                 PushRosNamespace(robot_namespace),
                 rf2o_odom,
 
-                #tf_map_odom,
+                tf_map_odom,
                 #tf_odom_basefootprint,
-                tf_basefootprint_baselink,
-                tf_baselink_laser,
             ]),
         slam_toolbox,
     ])

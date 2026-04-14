@@ -102,14 +102,14 @@ def generate_launch_description():
             'frame_id': 'laser_frame',
             'inverted': False,
             'angle_compensate': True,
-            'use_sim_time' : True,
+            'use_sim_time' : False,
         }],
     )
 
     robot_model = IncludeLaunchDescription(
         PathJoinSubstitution([ '.', 'xacro-robot-description.launch.py' ]),
         launch_arguments={
-            'model': PathJoinSubstitution([ '/', 'launch-content', 'parameters', 'bento-box-neo.urdf' ]),
+            'model': PathJoinSubstitution([ '.', 'parameters', 'bento-box-neo.urdf' ]),
         }.items()
     )
 
@@ -141,7 +141,7 @@ def generate_launch_description():
                 bento_drive,
             ]),
         lidar,
-#        slam,  # already namespaced
+        slam,  # already namespaced
         can_fix,
         robot_model,
     ])

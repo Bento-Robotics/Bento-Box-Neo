@@ -19,13 +19,13 @@ def generate_launch_description():
     use_lifecycle_manager = LaunchConfiguration("use_lifecycle_manager")
     slam_params_file = LaunchConfiguration('slam_params_file')
     use_sim_time = LaunchConfiguration('use_sim_time')
-    namespace = LaunchConfiguration('namespace')
+#    namespace = LaunchConfiguration('namespace')
 
     # Topic remappings
-    remappings = [  ('/map', 'map'),
+ #   remappings = [  ('/map', 'map'),
                     #('/tf', 'tf'),
                     #('/tf_static', 'tf_static'),
-                    ('/map_metadata', 'map_metadata')]
+ #                   ('/map_metadata', 'map_metadata')]
 
     declare_autostart_cmd = DeclareLaunchArgument(
         'autostart', default_value='true',
@@ -43,11 +43,11 @@ def generate_launch_description():
         'use_sim_time',
         default_value='true',
         description='Use simulation/Gazebo clock')
-    declare_robot_name_argument = DeclareLaunchArgument(
-        'namespace',
-        default_value='robot1',
-        description='Robot Name / Namespace. '
-                    'Each slam_toolbox instance should run in a different namespace')
+ #   declare_robot_name_argument = DeclareLaunchArgument(
+ #       'namespace',
+ #       default_value='robot1',
+ #       description='Robot Name / Namespace. '
+ #                   'Each slam_toolbox instance should run in a different namespace')
 
     start_async_slam_toolbox_node = LifecycleNode(
         parameters=[
@@ -55,9 +55,9 @@ def generate_launch_description():
           {
             'use_lifecycle_manager': use_lifecycle_manager,
             'use_sim_time': use_sim_time,
-            'odom_frame': PathJoinSubstitution([ namespace, 'odom' ]),
-            'map_frame': PathJoinSubstitution([ namespace, 'map' ]),
-            'base_frame': PathJoinSubstitution([ namespace, 'base_footprint' ]),
+#            'odom_frame': PathJoinSubstitution([ namespace, 'odom' ]),
+#            'map_frame': PathJoinSubstitution([ namespace, 'map' ]),
+#            'base_frame': PathJoinSubstitution([ namespace, 'base_footprint' ]),
           }
         ],
         package='slam_toolbox',
@@ -65,8 +65,8 @@ def generate_launch_description():
         name='slam_toolbox',
         output='screen',
         emulate_tty=True,
-        namespace=namespace,
-        remappings=remappings
+        namespace='/',
+#        remappings=remappings
     )
 
     configure_event = EmitEvent(
@@ -98,7 +98,7 @@ def generate_launch_description():
     ld.add_action(declare_use_lifecycle_manager)
     ld.add_action(declare_slam_params_file_cmd)
     ld.add_action(declare_use_sim_time_argument)
-    ld.add_action(declare_robot_name_argument)
+#    ld.add_action(declare_robot_name_argument)
 
     ld.add_action(start_async_slam_toolbox_node)
     ld.add_action(configure_event)
