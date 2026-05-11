@@ -62,10 +62,11 @@
     <origin xyz="0 0 0" rpy="0 0 ${pi}"/>
   </joint>
 
-<!-- Arm -->
+  <!-- Arm -->
   <xacro:property name="bottom_part_length" value="0.165"/>
   <xacro:property name="top_part_length" value="0.155"/>
-  <xacro:property name="gripper_part_length" value="0.110"/>
+  <xacro:property name="wrist_part_length" value="0.03"/>
+  <xacro:property name="gripper_part_length" value="0.08"/>
   <xacro:property name="parts_width" value="0.066"/>
   <xacro:property name="parts_height" value="0.02"/>
   <xacro:property name="servo_width" value="0.07"/>
@@ -135,9 +136,33 @@
   <link name="arm_wrist_link">
     <visual>
       <geometry>
-        <box size="${gripper_part_length} ${parts_width} ${parts_height}"/>
+        <box size="${wrist_part_length} ${parts_width} ${parts_height}"/>
       </geometry>
-      <origin xyz="${gripper_part_length/2} 0 0"/>
+      <origin xyz="${wrist_part_length/2} 0 0"/>
+      <material name="Gray">
+        <color rgba="0.2 0.2 0.2 1.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <link name="arm_endeffector_link">
+    <visual>
+      <geometry>
+        <box size="${gripper_part_length} ${parts_width/2} ${parts_height/2}"/>
+      </geometry>
+      <origin xyz="${gripper_part_length/2} 0 ${-parts_height/2}"/>
+      <material name="Gray">
+        <color rgba="0.2 0.2 0.2 1.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <link name="arm_endeffector_link_2">
+    <visual>
+      <geometry>
+        <box size="${gripper_part_length} ${parts_width/2} ${parts_height/2}"/>
+      </geometry>
+      <origin xyz="${gripper_part_length/2} 0 ${-parts_height/2}"/>
       <material name="Gray">
         <color rgba="0.2 0.2 0.2 1.0"/>
       </material>
@@ -185,6 +210,23 @@
     <origin rpy="0 ${pi} 0" xyz="0 0 ${parts_height/2}"/>
     <parent link="arm_wrist_servo"/>
     <child link="arm_wrist_link"/>
+  </joint>
+
+  <joint name="arm_endeffector_joint" type="revolute">
+    <axis xyz="0 0 1"/>
+    <limit effort="1000.0" lower="0.0" upper="3.7692" velocity="0.5"/>
+    <origin rpy="0 0 0" xyz="${wrist_part_length} ${parts_width/4} ${parts_height/2}"/>
+    <parent link="arm_wrist_link"/>
+    <child link="arm_endeffector_link"/>
+  </joint>
+
+  <joint name="arm_endeffector_joint_2" type="revolute">
+    <axis xyz="0 0 1"/>
+    <limit effort="1000.0" lower="0.0" upper="3.7692" velocity="0.5"/>
+    <origin rpy="0 0 0" xyz="${wrist_part_length} ${-parts_width/4} ${parts_height/2}"/>
+    <mimic joint="arm_endeffector_joint" multiplier="-1.0" offset="0.0"/>
+    <parent link="arm_wrist_link"/>
+    <child link="arm_endeffector_link_2"/>
   </joint>
 
 <!-- Wheel macro -->
