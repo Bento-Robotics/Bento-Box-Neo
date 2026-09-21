@@ -7,6 +7,6 @@ This repo, it's [wiki](https://github.com/Bento-Robotics/Bento-Box-Neo/wiki) and
 All system software changes made on Bento Box Neo's computer.  
 *networking, software installation*
 
-## [container](./container/README.md)
+## [containers](./containers/README.md)
 The container system for robotics software.  
 *ROS, fixing hangups*

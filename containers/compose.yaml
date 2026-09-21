@@ -1,0 +1,52 @@
+services:
+# ROS software 
+  bento-box-sw:
+    image: bento-box:jazzy
+    build:
+      context: ./build/
+      network: host
+      platforms: # select according to hardware
+      #- "linux/amd64"
+      - "linux/arm64"
+    container_name: bento-box-sw
+    logging:
+      #driver: "local"
+      options:
+        max-size: "10m"
+        max-file: "2"
+    user: root
+    init: true
+    restart: always
+    privileged: true
+    environment:
+        - EDU_ROBOT_NAMESPACE=bento
+    network_mode: "host"
+    ipc: host
+    volumes:
+      - './launch-content:/launch-content:ro'
+    working_dir: '/launch-content'
+    command: 'ros2 launch bento-box-sw.launch.py robot_namespace:="bento_box"'
+
+# ROS hardware interfaces
+  bento-box-hw:
+    image: bento-box:jazzy
+    container_name: bento-box-hw
+    logging:
+      #driver: "local"
+      options:
+        max-size: "10m"
+        max-file: "2"
+    user: root
+    init: true
+    restart: always
+    privileged: true
+    environment:
+        - EDU_ROBOT_NAMESPACE=bento
+    network_mode: "host"
+    ipc: host
+    volumes:
+      - './launch-content:/launch-content:ro'
+      - '/dev:/dev'
+      - '/run/udev:/run/udev' # libcamera won't work without this
+    working_dir: '/launch-content'
+    command: 'ros2 launch bento-box-hw.launch.py robot_namespace:="bento_box"'
