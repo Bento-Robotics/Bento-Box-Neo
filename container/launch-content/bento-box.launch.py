@@ -89,21 +89,13 @@ def generate_launch_description():
         emulate_tty=True,
     )
 
-    lidar = Node(
-        name='rplidar_composition',
-        package='rplidar_ros',
-        executable='rplidar_composition',
-        output='screen',
-        emulate_tty=True,
-        parameters=[{
+    lidar = IncludeLaunchDescription(
+        PathJoinSubstitution([ FindPackageShare('sllidar_ros2'), 'launch', 'sllidar_c1_launch.py' ]),
+        launch_arguments={
             'serial_port': '/dev/ttyUSB0',
-            'serial_baudrate': 115200,  # A1 / A2
-            # 'serial_baudrate': 256000, # A3
             'frame_id': 'laser_frame',
-            'inverted': False,
-            'angle_compensate': True,
-            'use_sim_time' : False,
-        }],
+            'inverted': 'false',
+        }.items()
     )
 
     robot_model = IncludeLaunchDescription(

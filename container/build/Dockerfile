@@ -10,7 +10,6 @@ RUN apt-get update && apt-get upgrade -y && apt-get install \
                  ros-jazzy-libcamera \
                  ros-jazzy-zbar-ros \
                  ros-jazzy-xacro \
-                 ros-jazzy-rplidar-ros \
                  ros-jazzy-slam-toolbox \
                  python3-pip python3-lgpio \
                  libcamera-tools can-utils i2c-tools \
@@ -26,20 +25,21 @@ WORKDIR /bento_ws
 ENV REBUILD=0
 
 # Get sources
-RUN cd src
+RUN cd src \
  && git clone https://github.com/Bento-Robotics/bento_diagnostics.git \
  && git clone https://github.com/Bento-Robotics/bento_drive.git \
  && git clone https://github.com/Bento-Robotics/TunnelVision.git \
  && git clone https://github.com/MAPIRlab/rf2o_laser_odometry.git \
+ && git clone https://github.com/Slamtec/sllidar_ros2.git \
  && git clone -b $ROS_DISTRO https://github.com/micro-ROS/micro_ros_msgs \
  && git clone -b $ROS_DISTRO https://github.com/micro-ROS/micro-ROS-Agent \
  && cd ..
 
 # Build workspace
 RUN bash -c " \
- && . /opt/ros/$ROS_DISTRO/setup.bash \
- && colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release \
-    "
+  . /opt/ros/$ROS_DISTRO/setup.bash && \
+  colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release \
+  "
 
 # Set up automatic sourcing
 RUN echo -e "source /opt/ros/jazzy/setup.bash\nsource /bento_ws/install/setup.bash" >> ~/.bashrc
