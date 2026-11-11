@@ -28,6 +28,7 @@ def generate_launch_description():
         arguments=['--ros-args', '--log-level', 'warn'],
         output='screen',
         emulate_tty=True,
+        remappings=[('/tf','tf'),('/tf_static','tf_static')],
     )
 
     slam_toolbox = IncludeLaunchDescription(
@@ -55,7 +56,7 @@ def generate_launch_description():
             "--frame-id", "map",  #PathJoinSubstitution([ robot_namespace, 'map' ]),
             "--child-frame-id", "odom",  #PathJoinSubstitution([ robot_namespace, 'odom' ])
         ],
-        #remappings=[('/tf','tf'),('/tf_static','tf_static')],
+        remappings=[('/tf','tf'),('/tf_static','tf_static')],
         output="screen",
         emulate_tty=True,
     )
@@ -74,7 +75,7 @@ def generate_launch_description():
             "--frame-id", PathJoinSubstitution([ robot_namespace, 'odom' ]),
             "--child-frame-id", PathJoinSubstitution([ robot_namespace, 'base_footprint' ])
         ],
-        #remappings=[('/tf','tf'),('/tf_static','tf_static')],
+        remappings=[('/tf','tf'),('/tf_static','tf_static')],
         output="screen",
         emulate_tty=True,
     )

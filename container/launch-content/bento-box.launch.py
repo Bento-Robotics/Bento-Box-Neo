@@ -132,8 +132,8 @@ def generate_launch_description():
                 camera_ros_3,
                 bento_drive,
                 lidar,
-                slam,  # already namespaced
+                slam,
+                robot_model,
             ]),
         can_fix,
-        robot_model,
     ])

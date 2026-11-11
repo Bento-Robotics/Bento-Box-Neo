@@ -12,7 +12,8 @@ def generate_launch_description():
     robot_state_publisher_node = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
-        parameters=[{'robot_description': Command(['xacro ', LaunchConfiguration('model')])}]
+        parameters=[{'robot_description': Command(['xacro ', LaunchConfiguration('model')])}],
+        remappings=[('/tf','tf'), ('/tf_static','tf_static')],
     )
 
     return LaunchDescription([
