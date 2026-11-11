@@ -15,7 +15,7 @@ services:
         max-file: "2"
     user: root
     init: true
-    restart: always
+    restart: unless-stopped
     privileged: true
     environment:
         - EDU_ROBOT_NAMESPACE=bento
