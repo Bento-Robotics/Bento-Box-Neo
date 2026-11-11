@@ -119,8 +119,8 @@ def generate_launch_description():
             description='set namespace for robot nodes'
         ),
         # start diagnostics before everything else
-        diagnostics,
-        aggregator,
+#        diagnostics,
+#        aggregator,
         # and give it a 3-second head start to initialize
         ROSTimer(
             period=3.0,
