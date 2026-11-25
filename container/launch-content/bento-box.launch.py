@@ -8,7 +8,7 @@ from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
 
 from launch.actions import GroupAction
-from launch_ros.actions import PushRosNamespace, ROSTimer
+from launch_ros.actions import PushRosNamespace, ROSTimer, SetRemap
 
 from launch.actions import ExecuteProcess, IncludeLaunchDescription
 from launch.substitutions import EnvironmentVariable, PathJoinSubstitution
@@ -123,7 +123,7 @@ def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument(
             'robot_namespace',
-            default_value='bento',
+            default_value='',
             description='set namespace for robot nodes'
         ),
         # start diagnostics before everything else
@@ -133,6 +133,8 @@ def generate_launch_description():
         ROSTimer(
             period=3.0,
             actions=[
+#                SetRemap(src='/tf', dst='/bento_box/tf'),
+#                SetRemap(src='/tf_static', dst='/bento_box/tf_static'),
                 PushRosNamespace(robot_namespace),
                 joystick,
                 camera_ros_1,

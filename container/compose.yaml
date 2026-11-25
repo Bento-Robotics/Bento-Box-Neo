@@ -25,4 +25,5 @@ services:
       - '/dev:/dev'
       - '/run/udev:/run/udev' # libcamera won't work without this
     working_dir: '/launch-content'
-    command: 'ros2 launch bento-box.launch.py robot_namespace:="bento_box"'
+#    command: 'ros2 launch bento-box.launch.py robot_namespace:="bento_box"'
+    command: 'ros2 launch bento-box.launch.py'
