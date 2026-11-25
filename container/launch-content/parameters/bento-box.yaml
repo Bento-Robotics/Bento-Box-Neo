@@ -26,7 +26,7 @@
     controller0:
       canID: 0
       gearRatio: 89.0
-      encoderRatio: 2048.0
+      encoderRatio: 2048.0 # 4 * 512 (datenblatt)
       rpmMax: 83.25
       invertEnc: 1
       drive0:
