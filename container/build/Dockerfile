@@ -6,11 +6,14 @@ RUN apt-get update && apt-get upgrade -y && apt-get install \
                  ros-jazzy-diagnostic-updater \
                  ros-jazzy-diagnostic-aggregator \
                  ros-jazzy-joy-linux \
+                 ros-jazzy-image-transport-plugins \
                  ros-jazzy-camera-ros \
                  ros-jazzy-libcamera \
                  ros-jazzy-zbar-ros \
                  ros-jazzy-xacro \
                  ros-jazzy-slam-toolbox \
+                 ros-jazzy-orbbec-camera \
+                 ros-jazzy-orbbec-description \
                  python3-pip python3-lgpio \
                  libcamera-tools can-utils i2c-tools \
                  nano \
@@ -31,6 +34,7 @@ RUN cd src \
  && git clone https://github.com/Bento-Robotics/TunnelVision.git \
  && git clone https://github.com/MAPIRlab/rf2o_laser_odometry.git \
  && git clone https://github.com/Slamtec/sllidar_ros2.git \
+ && git clone -b v2-main https://github.com/orbbec/OrbbecSDK_ROS2.git \
  && git clone -b $ROS_DISTRO https://github.com/micro-ROS/micro_ros_msgs \
  && git clone -b $ROS_DISTRO https://github.com/micro-ROS/micro-ROS-Agent \
  && cd ..

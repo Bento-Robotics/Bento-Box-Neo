@@ -89,6 +89,14 @@ def generate_launch_description():
         emulate_tty=True,
     )
 
+    stereo_cam = IncludeLaunchDescription(
+        PathJoinSubstitution([ FindPackageShare('orbbec_camera'), 'launch', 'gemini_330_series.launch.py' ]),
+        launch_arguments={
+            'enable_colored_point_cloud': 'true',
+            'camera_name': 'orbbec',
+        }.items()
+    )
+
     lidar = IncludeLaunchDescription(
         PathJoinSubstitution([ FindPackageShare('sllidar_ros2'), 'launch', 'sllidar_c1_launch.py' ]),
         launch_arguments={
@@ -134,6 +142,7 @@ def generate_launch_description():
                 lidar,
                 slam,
                 robot_model,
+                stereo_cam,
             ]),
         can_fix,
     ])
